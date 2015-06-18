@@ -74,6 +74,9 @@ init_template_dir = value_for_platform_family(
   "debian" => "debian"
 )
 
+prefix_dir = node['python']['prefix_dir']
+prefix_dir += '/local' if node['platform'] == 'amazon'
+
 case node['platform']
 when "amazon", "centos", "debian", "fedora", "redhat", "ubuntu", "raspbian"
   template "/etc/init.d/supervisor" do
@@ -84,7 +87,7 @@ when "amazon", "centos", "debian", "fedora", "redhat", "ubuntu", "raspbian"
     variables({
       # TODO: use this variable in the debian platform-family template
       # instead of altering the PATH and calling "which supervisord".
-      :supervisord => "#{node['python']['prefix_dir']}/bin/supervisord"
+      :supervisord => "#{prefix_dir}/bin/supervisord"
     })
   end
 
