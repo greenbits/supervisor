@@ -70,12 +70,12 @@ template "/etc/default/supervisor" do
 end
 
 init_template_dir = value_for_platform_family(
-  ["rhel", "fedora"] => "rhel",
+  ["rhel", "fedora", "centos", "amazon"] => "rhel",
   "debian" => "debian"
 )
 
 case node['platform']
-when "amazon", "centos", "debian", "fedora", "redhat", "ubuntu"
+when "amazon", "centos", "debian", "fedora", "redhat", "ubuntu", "raspbian"
   template "/etc/init.d/supervisor" do
     source "#{init_template_dir}/supervisor.init.erb"
     owner "root"
